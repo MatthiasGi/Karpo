@@ -7,11 +7,13 @@
 > Stunde bezeichnen.
 > Karpo ist eine der drei Horen. Karpo wird mit Reife, Ernte und Herbst
 > assoziiert.
+>
 > — *Aus Wikipedia (Horen/Karpo)*
 
 Karpo soll ein ausgewachsenes und „reifes“ Stundengeläut sein. Im Herzen steht
 dafür ein virtuelles Carillon, das regelmäßig eine Zeit anschlägt. Modular darum
 gruppieren sich verschiedene Funktionen zur Erweiterung.
+
 
 ## Carillon
 Im Unterordner `carillon` befindet sich dazu eine Orgeldefinitionsdatei. Diese
@@ -20,6 +22,15 @@ fehlende Töne erweitert worden. Sie lässt sich in GrandOrgue[^grandorgue]
 öffnen. In dieser Software lassen sich nun MIDI-Signale einspielen, die in
 Glockenschläge umgewandelt werden. Genau dieses Verhalten macht sich Karpo
 zunutze, indem es zur passenden Zeit diese Glockenschläge auslöst.
+
+Die Software implementiert `lib.carillon.Carillon` als Klasse, die die
+Kommunikation mit GrandOrgue abstrahiert.
+
+
+### Melodien
+Kern der Wiedergabe auf dem Carillon ist eine Melodie, wie sie durch
+`lib.melody.Melody` modelliert ist. Factory-Methoden helfen beim Erstellen
+dieser Liste an MIDI-Messages.
 
 [^sonimusicae]: Das Carillon ist der Seite
   http://sonimusicae.free.fr/carillondegand-en.html entnommen.
