@@ -1,9 +1,13 @@
 import mido
-import mido.backends.rtmidi
 import time
 from threading import Thread
 
-from .melody import Melody
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from mido.backends.rtmidi import Output
+
+    from .melody import Melody
+
 
 class Carillon:
     """
@@ -12,7 +16,7 @@ class Carillon:
 
     Attributes
     ----------
-    port : mido.backends.rtmidi.Output
+    port : Output
         MIDI-Port, an den die Nachrichten gesendet werden.
     priority : int
         Priorität der zuletzt gespielten Melodie. Sofern eine neue Melodie mit
@@ -29,7 +33,7 @@ class Carillon:
     _threaded_play(melody)
         Eigentliche Abspielmethode, die zum Threaden genutzt wird.
     """
-    def __init__(self, port: mido.backends.rtmidi.Output = None):
+    def __init__(self, port: Output = None):
         """
         Erzeugt das Carillon und belegt es mit einem MIDI-Port vor.
 
@@ -40,15 +44,15 @@ class Carillon:
             wird ein Standardport geöffnet.
         """
         self.port = mido.open_output() if port is None else port
-        self.priority : int = 0
-        self.thread : Thread = None
-        self.stopped : bool = False
+        self.priority: int = 0
+        self.thread: Thread = None
+        self.stopped: bool = False
 
     def play(self, melody: Melody, priority: int = 0) -> bool:
         """
         Spielt eine übergebene Melodie auf dem Carillon. Spielt bereits eine
-        Melodie, wird erst überprüft, ob deren Priorität höher ist. In dem Falle
-        wird abgewiesen.
+        Melodie, wird erst überprüft, ob deren Priorität höher ist. In dem
+        Falle wird abgewiesen.
 
         Parameters
         ----------
@@ -68,7 +72,7 @@ class Carillon:
             if self.priority > priority: return False
             self.stop()
         self.priority = priority
-        self.thread = Thread(target = self._threaded_play, args = ([melody]))
+        self.thread = Thread(target=self._threaded_play, args=([melody]))
         self.thread.start()
         return True
 
@@ -79,7 +83,7 @@ class Carillon:
         self.stopped = False
         self.port.reset()
 
-    def _threaded_play(self, melody : Melody) -> None:
+    def _threaded_play(self, melody: Melody) -> None:
         """
         Interne Methode zum Abspielen der Melodie innerhalb eines Threads.
 

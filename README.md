@@ -30,7 +30,8 @@ Kommunikation mit GrandOrgue abstrahiert.
 ### Melodien
 Kern der Wiedergabe auf dem Carillon ist eine Melodie, wie sie durch
 `lib.melody.Melody` modelliert ist. Factory-Methoden helfen beim Erstellen
-dieser Liste an MIDI-Messages.
+dieser Liste an MIDI-Messages. Das Objekt selber ermöglicht Tempoänderung und
+Transponierung der voreingestellten Melodie.
 
 [^sonimusicae]: Das Carillon ist der Seite
   http://sonimusicae.free.fr/carillondegand-en.html entnommen.

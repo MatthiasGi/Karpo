@@ -1,5 +1,9 @@
 import mido
-from typing import List
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from typing import List
+
 
 class Melody:
     """
@@ -9,7 +13,14 @@ class Melody:
     Attributes
     ----------
     messages : List[mido.Message]
-        Liste an MIDI-Nachrichten, die diese Melodie enthält.
+        Liste an MIDI-Nachrichten, die diese Melodie enthält, dabei wurden alle
+        Einstellungen bereits angewendet.
+    tempo : float
+        Multiplikator für das Wiedergabetempo.
+    transpose : int
+        Anzahl der Halbtöne, um die transponiert werden soll.
+    _messages : List[mido.Message]
+        Interner Speicher für die unbearbeiteten MIDI-Nachrichten.
 
     Static Methods
     --------------
@@ -26,7 +37,19 @@ class Melody:
         messages : List[mido.Message]
             Nachrichten, die die Melodie ergeben.
         """
-        self.messages = messages
+        self._messages = messages
+        self.transpose: int = 0
+        self.tempo: float = 1
+
+    @property
+    def messages(self) -> List[mido.Message]:
+        """MIDI-Nachrichten mit Anpassung durch Tempo und Transponierung."""
+        messages = [m.copy() for m in self._messages]
+        for m in messages:
+            m.time /= self.tempo
+            if m.type not in ('note_on', 'note_off'): continue
+            m.note += self.transpose
+        return messages
 
     def from_file(path: str) -> 'Melody':
         """
