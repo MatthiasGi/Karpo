@@ -1,5 +1,8 @@
 {
+  "mqtt_id": "Karpo"
   "mqtt_server": "localhost",
   "mqtt_port": 1883,
-  "mqtt_basetopic": "karpo"
+  "mqtt_basetopic": "karpo",
+  "mqtt_user": "karpo",
+  "mqtt_password": null
 }

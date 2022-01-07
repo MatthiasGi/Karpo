@@ -12,6 +12,8 @@ class Settings(BaseSettings):
 
     Attributes
     ----------
+    mqtt_id : str
+        Eindeutige Bezeichnung für den MQTT-Client.
     mqtt_server : str
         Adresse des MQTT-Brokers. Falls diese `None` ist, wird das MQTT-Modul
         abgeschaltet.
@@ -20,6 +22,10 @@ class Settings(BaseSettings):
     mqtt_basetopic : str
         Basispfad, an den alle Pfade angehängt werden zur besseren
         Unterscheidung.
+    mqtt_user : str
+        Optionaler Benutzer für die Authentifizierung beim MQTT-Broker.
+    mqtt_password : str
+        Optionales Passwort für die Authentifizierung beim MQTT-Broker.
 
     Class Methods
     -------------
@@ -31,9 +37,12 @@ class Settings(BaseSettings):
     Config
         Interne Einstellungen für die Einstellungsklasse.
     """
+    mqtt_id: str = 'Karpo'
     mqtt_server: str = None
     mqtt_port: int = 1883
     mqtt_basetopic: str = 'karpo'
+    mqtt_user: str = None
+    mqtt_password: str = None
 
     @root_validator
     def save_settings(cls, values: Dict[str, Any]) -> Dict[str, Any]:

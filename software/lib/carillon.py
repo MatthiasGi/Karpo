@@ -84,10 +84,11 @@ class Carillon:
         ----------
         melody : Melody
             Die abzuspielende Melodie.
-        priorty : int
+        priorty : int (optional)
             Die Priorität, die der Melodie beigemessen wird. Nur wenn die
             Priorität mindestens genauso hoch ist wie die der gerade
-            abgespielten Melodie wird diese abgebrochen und jene angefangen.
+            abgespielten Melodie wird diese abgebrochen und jene angefangen. Im
+            Normalfall 0.
 
         Returns
         -------
