@@ -1,2 +1,6 @@
 __pycache__
 .DS_Store
+
+# Konfigurationsdatei aussparen, damit diese immer individuell angepasst werden
+# kann
+software/config.json

@@ -15,6 +15,17 @@ dafür ein virtuelles Carillon, das regelmäßig eine Zeit anschlägt. Modular d
 gruppieren sich verschiedene Funktionen zur Erweiterung.
 
 
+## Installation
+Hier folgen zeitnah einige Sätze zum Ablauf der Installation. Einige Stichpunkte
+bereits vorab:
+* Installation von GrandOrgue
+* Öffnen der Orgeldatei und MIDI-Einstellungen für Töne und Lautstärke
+* Vorbereitung mittels `pipenv`
+* Einstellungsdatei (auf Basis der `config.example.json`)
+* Autostart des Runscripts (folgt!)
+* Anschluss im Falle eines Raspberry Pis
+
+
 ## Carillon
 Im Unterordner `carillon` befindet sich dazu eine Orgeldefinitionsdatei. Diese
 basiert auf den Arbeiten von Soni Musicae[^sonimusicae] und ist etwas um
