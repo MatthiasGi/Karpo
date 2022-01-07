@@ -20,6 +20,8 @@ class Carillon:
         geringerer Priorität abgespielt werden soll, wird abgewiesen.
     thread : Thread
         Thread, der asynchron die Melodie abspielt.
+    volume : float
+        Lautstärke des Carillons zwischen 0 und 1.
 
     Methods
     -------
@@ -44,6 +46,33 @@ class Carillon:
         self.priority: int = 0
         self.thread: Thread = None
         self.stopped: bool = False
+        self.volume = 1
+
+    @property
+    def volume(self) -> float:
+        """Die aktuell eingestellte Lautstärke des Carillons."""
+        return self._volume
+
+    @volume.setter
+    def volume(self, value: float) -> None:
+        """
+        Stellt die Lautstärke des Carillons über eine Control-Change-Message an
+        den Controller 7. Dabei wird eine Lautstärke zwischen 0 und 1 erwartet,
+        die dann auf einen Wert zwischen 0 und 127 gemappt wird.
+
+        Parameters
+        ----------
+        value : float
+            Die neue gewünschte Lautstärke als Zahl zwischen 0 und 1. Zahlen
+            außerhalb diesen Bereichs werden auf diese Extremwerte beschränkt.
+        """
+        # Lautstärke auf [0, 1] beschränken
+        self._volume = max(min(value, 1), 0)
+        # Mappen auf MIDI-Value zwischen 0 und 127
+        val = int(self._volume * 127)
+
+        msg = mido.Message('control_change', control=7, value=val)
+        self.port.send(msg)
 
     def play(self, melody: Melody, priority: int = 0) -> bool:
         """

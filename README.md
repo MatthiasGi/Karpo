@@ -24,7 +24,10 @@ Glockenschläge umgewandelt werden. Genau dieses Verhalten macht sich Karpo
 zunutze, indem es zur passenden Zeit diese Glockenschläge auslöst.
 
 Die Software implementiert `lib.carillon.Carillon` als Klasse, die die
-Kommunikation mit GrandOrgue abstrahiert.
+Kommunikation mit GrandOrgue abstrahiert. Ferner ist dort explizit die
+Einstellung der Lautstärke möglich. Diese wird als Control-Change-Message an den
+Controller 7 gesendet, der per MIDI-Konvention vornehmlich für Lautstärke zu
+verwenden ist.
 
 
 ### Melodien
