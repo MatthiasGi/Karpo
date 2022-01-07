@@ -26,6 +26,11 @@ class Settings(BaseSettings):
         Optionaler Benutzer für die Authentifizierung beim MQTT-Broker.
     mqtt_password : str
         Optionales Passwort für die Authentifizierung beim MQTT-Broker.
+    jukebox_priority : int
+        Mit welcher Priorität die Melodien aus der Jukebox abgespielt werden
+        sollen.
+    jukebox_basefolder : str
+        Pfad, in dem die Jukebox nach Melodien sucht.
 
     Class Methods
     -------------
@@ -43,6 +48,9 @@ class Settings(BaseSettings):
     mqtt_basetopic: str = 'karpo'
     mqtt_user: str = None
     mqtt_password: str = None
+
+    jukebox_priority: int = 5
+    jukebox_basefolder: str = '../melodies/songs'
 
     @root_validator
     def save_settings(cls, values: Dict[str, Any]) -> Dict[str, Any]:

@@ -55,7 +55,7 @@ class MqttClient:
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.connect(
-            self.settings.mqtt_server, self.settings.mqtt_port, keepalive=5)
+            self.settings.mqtt_server, self.settings.mqtt_port)
 
         self.client.loop_start()
 
@@ -98,6 +98,7 @@ class MqttClient:
         """
         for t in topics:
             topic = f'{self.settings.mqtt_basetopic}/{t}'
+            print(f'MQTT-Sub: Subscribed to {topic}.')
             self._subscriptions[topic] = callback
             self.client.subscribe(topic)
 
@@ -108,9 +109,10 @@ class MqttClient:
         if rc == 0: self.connected = True
 
     def _on_message(
-        self, client: mqtt.Client, userdata: Any, msg: mqtt.client.MQTTMessage
+        self, client: mqtt.Client, userdata: Any, msg: mqtt.MQTTMessage
     ) -> None:
         """Internes Callback, das Nachrichten entgegennimmt."""
+        print(f'MQTT-Msg: {msg.topic}: {msg.payload}')
         if msg.topic not in self._subscriptions: return
         topic = msg.topic.removeprefix(f'{self.settings.mqtt_basetopic}/')
         self._subscriptions[msg.topic](topic, msg.payload)
