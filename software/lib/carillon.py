@@ -1,12 +1,9 @@
 import mido
+from mido.backends.rtmidi import Output
 import time
 from threading import Thread
 
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from mido.backends.rtmidi import Output
-
-    from .melody import Melody
+from .melody import Melody
 
 
 class Carillon:
