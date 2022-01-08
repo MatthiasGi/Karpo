@@ -65,7 +65,7 @@ class DirektoriumProxy:
     ) -> Melody:
         """Callback, das bei Bedarf eine marianische Antiphon anhängt."""
         h, q = self.settings.antiphon.split(':')
-        if hours != int(h) and quarters != int(q) // 15: return melody
+        if hours != int(h) or quarters != int(q) // 15: return melody
 
         season = self.direktorium.season()
         apath = self.settings.antiphon_ordinary

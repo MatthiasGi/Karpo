@@ -116,6 +116,12 @@ class MqttSettings(BaseModel):
         Optionaler Benutzer für die Authentifizierung beim MQTT-Broker.
     password : str
         Optionales Passwort für die Authentifizierung beim MQTT-Broker.
+    controller : bool
+        Ob der Controller für einfache Einstellungsänderungen geladen werden
+        soll.
+    control_volume : float
+        Einstellung der Lautstärke des Carillons, so, wie sie durch den
+        Controller angepasst wurde
     """
     id: str = 'Karpo'
     server: str = None
@@ -123,6 +129,8 @@ class MqttSettings(BaseModel):
     basetopic: str = 'karpo'
     user: str = None
     password: str = None
+    controller: bool = True
+    control_volume: float = 1
 
 
 class StrikerSettings(BaseModel, extra=Extra.allow):

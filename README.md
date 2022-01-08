@@ -170,3 +170,17 @@ MQTT-Topics stehen zur Auswahl:
   festzulegen und bestätigt die Eingabe auf `jukebox/transpose`.
 * `jukebox/transpose/get`: Gibt die aktuelle Transponierung auf
   `jukebox/transpose` zurück.
+
+
+### MQTT-Controller
+Der `lib.mqttcontroller.MqttController` bietet weiterhin die Möglichkeit, einige
+globale Einstellungen über MQTT vorzunehmen. Im Einzelnen sind das:
+* `control/volume/get`: Teilt die eingestellte Lautstärke unter `control/volume`
+  mit.
+* `control/volume/set`: Setzt die Lautstärke und teilt sie wie oben mit.
+* `control/stop`: Stoppt alles, was gerade abgespielt wird.
+* `control/theme/get`: Teilt unter `control/theme` das eingestellte
+  Schlagwerk-Theme mit.
+* `control/theme/list/get`: Listet unter `control/theme/list` alle verfügbaren
+  Themes auf.
+* `control/theme/set`: Stellt das Theme ein und teilt es wie oben mit.
