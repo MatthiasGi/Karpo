@@ -4,3 +4,6 @@ __pycache__
 # Konfigurationsdatei aussparen, damit diese immer individuell angepasst werden
 # kann
 software/config.json
+
+# Cache des Direktoriums aussparen
+cache/

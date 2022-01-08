@@ -75,7 +75,7 @@ class DirektoriumProxy:
             apath = self.settings.antiphon_lent
         elif season == Season.EASTER:
             apath = self.settings.antiphon_easter
-        antiphon = Melody(apath)
+        antiphon = Melody.from_file(apath)
         antiphon.transpose = self.settings.antiphon_transpose
         antiphon.tempo = self.settings.antiphon_tempo
 

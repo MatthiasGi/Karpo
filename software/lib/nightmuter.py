@@ -19,8 +19,6 @@ class Nightmuter:
         Stundenzahl, um die die Nachtabschaltung beginnen soll.
     start_quarter : int
         Quartalsnummer, um die die Nachtabschaltung beginnen soll.
-    striker : Striker
-        Schlagwerk, das nachts abgeschaltet werden soll.
 
     Methods
     -------
@@ -33,9 +31,8 @@ class Nightmuter:
         Registriert sich beim Schlagwerk als Callback zur Überprüfung der
         Nachtabschaltung.
         """
-        self.striker: Striker = striker
         self.settings: StrikerSettings = Settings().striker
-        self.striker.subscribe(self._check_mute)
+        striker.subscribe(self._check_mute)
 
     @property
     def end_hour(self) -> int:

@@ -41,6 +41,10 @@ fehlende Töne erweitert worden. Sie lässt sich in GrandOrgue[^grandorgue]
 Glockenschläge umgewandelt werden. Genau dieses Verhalten macht sich Karpo
 zunutze, indem es zur passenden Zeit diese Glockenschläge auslöst.
 
+[^sonimusicae]: Das Carillon ist der Seite
+  http://sonimusicae.free.fr/carillondegand-en.html entnommen.
+[^grandorgue]: https://github.com/GrandOrgue/grandorgue
+
 Die Software implementiert `lib.carillon.Carillon` als Klasse, die die
 Kommunikation mit GrandOrgue abstrahiert. Ferner ist dort explizit die
 Einstellung der Lautstärke möglich. Diese wird als Control-Change-Message an den
@@ -92,15 +96,25 @@ in der Nacht auslöst. Dazu wird in den Einstellungen zum Schlagwerk `striker`
 eine Abschaltungsstartzeit `nightmuter_start` und Endzeit `nightmuter_end`
 angegeben.
 
-[^sonimusicae]: Das Carillon ist der Seite
-  http://sonimusicae.free.fr/carillondegand-en.html entnommen.
-[^grandorgue]: https://github.com/GrandOrgue/grandorgue
+#### Angelus
+Die Klasse `lib.angelusplayer.AngelusPlayer` ist in der Lage, zu vorbestimmten
+Zeiten einen Angelus zu spielen. Unter den Einstellungen `angelus` findet sich
+insbesondere der Parameter `times`, der dann Kommagetrennt Zeiten für den
+Angelus erwartet, also etwa `"06:00,12:00,18:00"`. Der Angelus funktioniert
+allerdings nur in **Zusammenhang mit dem Stundengeläut**. Ist das also stumm
+(wegen etwa der Nachtabschaltung), so kommt es auch zu keinem Angelusgeläut. Die
+Angelusmelodie wird mittels `path` hinterlegt und lässt sich auch Transponieren
+(`transpose`) bzw. im Tempo anpassen (`tempo`).
 
 
 ## Direktorium
 Die aus Vorprojekten entlehnte Bibliothek `lib.direktorium` macht Angaben über
 den liturgischen Kalender und basiert auf der API von Hatto v. Hatzfeld
 SDB[^lk-api].
+
+[^lk-api]: Der liturgische Kalender von eucharistiefeier.de ist erreichbar
+unter: http://www.eucharistiefeier.de/lk/. Die Server stellen dafür die
+Salesianer Don Boscos zur Verfügung.
 
 Dadurch kann das Geläut auf liturgische Feste reagieren. Die einzelnen Aspekte
 lassen sich in der Einstellungsdatei unter dem Punkt `direktorium` steuern. Im
@@ -125,9 +139,6 @@ Einzelnen sind das folgende Möglichkeiten:
 * `antiphon_transpose`: Globale Option zur Transponierung der Antiphonen.
 * `antiphon_tempo`: Globale Option zur Tempoanpassung der Antiphonen.
 
-[^lk-api]: Der liturgische Kalender von eucharistiefeier.de ist erreichbar
-unter: http://www.eucharistiefeier.de/lk/. Die Server stellen dafür die
-Salesianer Don Boscos zur Verfügung.
 [^kalender]: Die verfügbaren Kalender sind unter
 http://www.eucharistiefeier.de/lk/teilkirchen.php einsehbar.
 

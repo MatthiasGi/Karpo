@@ -5,6 +5,28 @@ from pydantic.env_settings import SettingsSourceCallable
 from typing import Any, Dict, Tuple
 
 
+class AngelusSettings(BaseModel):
+    """
+    Einstellungen für den Angelus.
+
+    Attributes
+    ----------
+    times : str
+        Kommagetrennte Liste von Zeiten, an deren Schlagwerkzeit sich ein
+        Angelus anschließen soll. Bei None gibt's keinen Angelus.
+    path : str
+        Pfad zum Angeluslied.
+    transpose : int
+        Transponierung des Angelus.
+    tempo : float
+        Tempoanpassung des Angelus.
+    """
+    times: str = None
+    path: str = '../melodies/songs/Lourdes Lied.mid'
+    transpose: int = 0
+    tempo: float = 1
+
+
 class DirektoriumSettings(BaseModel):
     """
     Einstellungen für das Direktorium.
@@ -134,6 +156,8 @@ class Settings(BaseSettings):
 
     Attributes
     ----------
+    angelus : AngelusSettings
+        Einstellungen für den Angelus.
     direktorium : DirektoriumSettings
         Einstellungen für das Direktorium.
     jukebox : JukeboxSettings
@@ -154,6 +178,7 @@ class Settings(BaseSettings):
         Interne Einstellungen für die Einstellungsklasse.
     """
 
+    angelus: AngelusSettings = AngelusSettings()
     direktorium: DirektoriumSettings = DirektoriumSettings()
     jukebox: JukeboxSettings = JukeboxSettings()
     mqtt: MqttSettings = MqttSettings()

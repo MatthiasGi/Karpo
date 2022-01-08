@@ -46,7 +46,7 @@ class Direktorium:
     def get(self, d: date) -> List[Event]:
         """Gibt eine Liste von Events für ein angegebenes Datum zurück."""
         r = self.request_cache(d)
-        entries = [Event.parse(e) for e in r.json()['Zelebrationen'].values()]
+        entries = [Event.parse(e) for e in r['Zelebrationen'].values()]
         entries.sort(key=lambda e: e.importance)
         return entries
 
