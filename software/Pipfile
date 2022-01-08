@@ -8,6 +8,7 @@ mido = "*"
 pydantic = "*"
 paho-mqtt = "*"
 python-rtmidi = "*"
+schedule = "*"
 
 [dev-packages]
 

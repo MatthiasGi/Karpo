@@ -31,6 +31,12 @@ class Settings(BaseSettings):
         sollen.
     jukebox_basefolder : str
         Pfad, in dem die Jukebox nach Melodien sucht.
+    striker_priority : int
+        Mit welcher Priorität der Stundenschlag abgespielt werden soll.
+    striker_basefolder : str
+        Pfad, in dem die verschiedenen Stile von Stundenschlägen liegen.
+    striker_theme : str
+        Aktuell ausgewählter Stil für Stundenschläge.
 
     Class Methods
     -------------
@@ -51,6 +57,10 @@ class Settings(BaseSettings):
 
     jukebox_priority: int = 5
     jukebox_basefolder: str = '../melodies/songs'
+
+    striker_priority: int = -1
+    striker_basefolder: str = '../melodies/striker'
+    striker_theme: str = 'westminster'
 
     @root_validator
     def save_settings(cls, values: Dict[str, Any]) -> Dict[str, Any]:

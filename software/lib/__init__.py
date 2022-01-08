@@ -3,5 +3,7 @@ from .jukebox import Jukebox
 from .melody import Melody
 from .mqttclient import MqttClient
 from .settings import Settings
+from .striker import Striker
 
-__all__ = ['Carillon', 'Jukebox', 'Melody', 'MqttClient', 'Settings']
+__all__ = ['Carillon', 'Jukebox', 'Melody', 'MqttClient', 'Settings',
+           'Striker']

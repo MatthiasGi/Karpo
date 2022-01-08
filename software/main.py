@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import time
 
-from lib import Carillon, Jukebox, MqttClient
+from lib import Carillon, Striker
 
 
 if __name__ == '__main__':
     c = Carillon()
-    m = MqttClient()
-    j = Jukebox(c, m)
+    s = Striker(c)
 
     while True:
         time.sleep(0.1)
