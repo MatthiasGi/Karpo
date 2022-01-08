@@ -9,6 +9,7 @@ pydantic = "*"
 paho-mqtt = "*"
 python-rtmidi = "*"
 schedule = "*"
+requests = "*"
 
 [dev-packages]
 

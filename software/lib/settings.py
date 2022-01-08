@@ -5,6 +5,59 @@ from pydantic.env_settings import SettingsSourceCallable
 from typing import Any, Dict, Tuple
 
 
+class DirektoriumSettings(BaseModel):
+    """
+    Einstellungen für das Direktorium.
+
+    Attributes
+    ----------
+    cachedir : str
+        Verzeichnis, in dem die Feste gecachet werden können.
+    eastermute : bool
+        Ob eine Osterstille zu Karfreitag und Karsamstag eingehalten werden
+        soll.
+    kalender : str
+        Kalenderbezeichnung für die Kalender-API.
+    theme_nichtgeboten : str
+        Schlagwerktheme, das an nichtgebotenen Gedenktagen genutzt werden soll.
+    theme_geboten : str
+        Schlagwerktheme, das an gebotenen Gedenktagen genutzt werden soll.
+    theme_fest : str
+        Schlagwerktheme, das an Festen genutzt werden soll.
+    theme_hochfest : str
+        Schlagwerktheme, das an Hochfesten genutzt werden soll.
+    antiphon : str
+        Zeit, nach deren Angabe die aktuelle marianische Antiphon gespielt
+        werden soll. Bei None wird sie gar nicht gespielt.
+    antiphon_christmas : str
+        Pfad zur Antiphon für die Weihnachtszeit (Alma redemptoris mater).
+    antiphon_lent : str
+        Pfad zur Antiphon für die Fastenzeit (Ave Regina caelorum).
+    antiphon_easter : str
+        Pfad zur Antiphon für die Osterzeit (Regina caeli laetare).
+    antiphon_ordinary : str
+        Pfad zur Antiphon für die nichtgeprägten Zeiten (Salve Regina).
+    antiphon_transpose : int
+        Globale Transponierung der Antiphonen.
+    antiphon_tempo : float
+        Globale Tempoanpassung der Antiphonen.
+    """
+    cachedir: str = './cache'
+    eastermute: bool = False
+    kalender: str = 'deutschland'
+    theme_nichtgeboten: str = None
+    theme_geboten: str = None
+    theme_fest: str = None
+    theme_hochfest: str = None
+    antiphon: str = '21:00'
+    antiphon_christmas: str = '../melodies/songs/Alma Redemptoris Mater.mid'
+    antiphon_lent: str = '../melodies/songs/Ave Regina caelorum.mid'
+    antiphon_easter: str = '../melodies/songs/Regina caeli laetare.mid'
+    antiphon_ordinary: str = '../melodies/songs/Salve Regina.mid'
+    antiphon_transpose = 0
+    antiphon_tempo = 1
+
+
 class JukeboxSettings(BaseModel):
     """
     Einstellungen für die Jukebox.
@@ -81,6 +134,8 @@ class Settings(BaseSettings):
 
     Attributes
     ----------
+    direktorium : DirektoriumSettings
+        Einstellungen für das Direktorium.
     jukebox : JukeboxSettings
         Einstellungen für die Jukebox.
     mqtt : MqttSettings
@@ -99,6 +154,7 @@ class Settings(BaseSettings):
         Interne Einstellungen für die Einstellungsklasse.
     """
 
+    direktorium: DirektoriumSettings = DirektoriumSettings()
     jukebox: JukeboxSettings = JukeboxSettings()
     mqtt: MqttSettings = MqttSettings()
     striker: StrikerSettings = StrikerSettings()

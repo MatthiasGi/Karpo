@@ -97,6 +97,41 @@ angegeben.
 [^grandorgue]: https://github.com/GrandOrgue/grandorgue
 
 
+## Direktorium
+Die aus Vorprojekten entlehnte Bibliothek `lib.direktorium` macht Angaben über
+den liturgischen Kalender und basiert auf der API von Hatto v. Hatzfeld
+SDB[^lk-api].
+
+Dadurch kann das Geläut auf liturgische Feste reagieren. Die einzelnen Aspekte
+lassen sich in der Einstellungsdatei unter dem Punkt `direktorium` steuern. Im
+Einzelnen sind das folgende Möglichkeiten:
+* `cachedir`: Pfad zum Ordner, indem die liturgischen Informationen
+  zwischengespeichert werden können.
+* `eastermute`: Ob Karfreitag und Karsamstag das Geläut schweigen soll.
+* `kalender`: Bezeichnung des zu verwendenden Lokalkalenders[^kalender].
+* `theme_nichtgeboten`: Ggf. alternatives Geläut-Theme für nichtgebotene
+  Gedenktage.
+* `theme_geboten`: Ggf. alternatives Geläut-Theme für gebotene Gedenktage.
+* `theme_fest`: Ggf. alternatives Geläut-Theme für Feste.
+* `theme_hochfest`: Ggf. alternatives Geläut-Theme für Hochfeste.
+* `antiphon`: Angabe zur Zeit, an deren Geläutanschluss sich eine Marianische
+  Antiphon anschließen soll.
+* `antiphon_christmas`: Pfad zur Antiphon für die Weihnachtszeit (Alma
+  redemptoris mater).
+* `antiphon_lent`: Pfad zur Antiphon für die Fastenzeit (Ave Regina caelorum).
+* `antiphon_easter`: Pfad zur Antiphon für die Osterzeit (Regina caeli laetare).
+* `antiphon_ordinary`: Pfad zur Antiphon für die nichtgeprägten Zeiten (Salve
+  Regina).
+* `antiphon_transpose`: Globale Option zur Transponierung der Antiphonen.
+* `antiphon_tempo`: Globale Option zur Tempoanpassung der Antiphonen.
+
+[^lk-api]: Der liturgische Kalender von eucharistiefeier.de ist erreichbar
+unter: http://www.eucharistiefeier.de/lk/. Die Server stellen dafür die
+Salesianer Don Boscos zur Verfügung.
+[^kalender]: Die verfügbaren Kalender sind unter
+http://www.eucharistiefeier.de/lk/teilkirchen.php einsehbar.
+
+
 ## MQTT
 Der MQTT-Client erlaubt es, das Schlaggeläut etwa in das SmartHome zu
 integrieren. Einzelne Module können andocken, um auf Nachrichten zu reagieren.
