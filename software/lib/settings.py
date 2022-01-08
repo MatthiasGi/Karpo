@@ -65,7 +65,7 @@ class StrikerSettings(BaseModel, extra=Extra.allow):
     """
     priority: int = -1
     basefolder: str = '../melodies/striker'
-    theme: str = 'westminster'
+    theme: str = 'default'
 
 
 class Settings(BaseSettings):

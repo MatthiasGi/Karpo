@@ -73,6 +73,16 @@ einem Untereinstellungsdictionary `themes` kann für jedes Theme optional ein
 eigenes Dictionary angelegt werden. Dort sind Einstellungen zu Transponierung
 und Tempo für das spezifische Theme möglich.
 
+Folgende Themes sind definiert:
+* `default`: Ein einfaches Schlagwerk aus je einem Ton für Viertelstunde und
+  Stunde.
+* `mehrerau`: Ein Geläut, dass dem der Territorialabtei Wettingen-Mehrerau
+  entlehnt ist. Zur Viertelstunde läuten insgesamt drei Glocken (*Engel* A2#,
+  *Bernhard* G2#, *Apostel* F2#), zur vollen Stunde eine Glocke (*Trinitatis*
+  A1#). Das Abteigeläut verfügt ferner über zwei weitere – hier ungenutzte –
+  Glocken (*Josef* D2#, *Maria* C2#).
+* `westminster`: Der klassische Westminster-Schlag.
+
 [^sonimusicae]: Das Carillon ist der Seite
   http://sonimusicae.free.fr/carillondegand-en.html entnommen.
 [^grandorgue]: https://github.com/GrandOrgue/grandorgue
