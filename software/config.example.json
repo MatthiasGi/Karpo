@@ -1,8 +1,25 @@
 {
-  "mqtt_id": "Karpo"
-  "mqtt_server": "localhost",
-  "mqtt_port": 1883,
-  "mqtt_basetopic": "karpo",
-  "mqtt_user": "karpo",
-  "mqtt_password": null
+  "jukebox": {
+    "priority": 5,
+    "basefolder": "../melodies/songs"
+  },
+  "mqtt": {
+    "id": "Karpo",
+    "server": "localhost",
+    "port": 1883,
+    "basetopic": "karpo",
+    "user": "karpo",
+    "password": null
+  },
+  "striker": {
+    "priority": -1,
+    "basefolder": "../melodies/striker",
+    "theme": "westminster",
+    "themes": {
+      "westminster": {
+        "transpose": -12,
+        "tempo": 0.8
+      }
+    }
+  }
 }

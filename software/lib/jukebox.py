@@ -5,7 +5,7 @@ from typing import List
 from .carillon import Carillon
 from .melody import Melody
 from .mqttclient import MqttClient
-from .settings import Settings
+from .settings import JukeboxSettings, Settings
 
 
 class Jukebox:
@@ -19,7 +19,7 @@ class Jukebox:
         Carillon, auf dem gespielt wird.
     client : MqttClient
         MqttClient, der die Verbindung zum Server herstellt.
-    settings : Settings
+    settings : JukeboxSettings
         Eintellungsobjekt, das globale Einstellungen beibehält.
     transpose : int
         Transponierung für die folgenden Melodien.
@@ -47,7 +47,7 @@ class Jukebox:
         client : MqttClient
             MQTT-Client, über den die Nachrichten abgegriffen werden.
         """
-        self.settings: Settings = Settings()
+        self.settings: JukeboxSettings = Settings().jukebox
         self.carillon: Carillon = carillon
         self.client: MqttClient = client
         self.transpose: int = 0
@@ -65,7 +65,7 @@ class Jukebox:
         -------
         Liste aller Melodien, die zur Verfügung stehen.
         """
-        songs = glob(f'{self.settings.jukebox_basefolder}/*.mid')
+        songs = glob(f'{self.settings.basefolder}/*.mid')
         return [Path(s).stem for s in songs]
 
     def play(self, song: str) -> None:
@@ -77,11 +77,11 @@ class Jukebox:
         song : str
             Name des Liedes, das abgespielt werden soll.
         """
-        path = Path(f'{self.settings.jukebox_basefolder}/{song}.mid')
+        path = Path(f'{self.settings.basefolder}/{song}.mid')
         if not path.exists(): return
         melody = Melody.from_file(path)
         melody.transpose = self.transpose
-        self.carillon.play(melody, self.settings.jukebox_priority)
+        self.carillon.play(melody, self.settings.priority)
 
     def _publish_transpose(self) -> None:
         """Interne Methode, die die aktuelle Transponierung broadcasten."""

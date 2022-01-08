@@ -1,8 +1,71 @@
 import json
 from pathlib import Path
-from pydantic import BaseSettings, root_validator
+from pydantic import BaseModel, BaseSettings, Extra, root_validator
 from pydantic.env_settings import SettingsSourceCallable
 from typing import Any, Dict, Tuple
+
+
+class JukeboxSettings(BaseModel):
+    """
+    Einstellungen für die Jukebox.
+
+    Attributes
+    ----------
+    priority : int
+        Mit welcher Priorität die Melodien aus der Jukebox abgespielt werden
+        sollen.
+    basefolder : str
+        Pfad, in dem die Jukebox nach Melodien sucht.
+    """
+    priority: int = 5
+    basefolder: str = '../melodies/songs'
+
+
+class MqttSettings(BaseModel):
+    """
+    Einstellungen für den MQTT-Client.
+
+    Attributes
+    ----------
+    id : str
+        Eindeutige Bezeichnung für den MQTT-Client.
+    server : str
+        Adresse des MQTT-Brokers. Falls diese `None` ist, wird das MQTT-Modul
+        abgeschaltet.
+    port : int
+        Port des MQTT-Brokers.
+    basetopic : str
+        Basispfad, an den alle Pfade angehängt werden zur besseren
+        Unterscheidung.
+    user : str
+        Optionaler Benutzer für die Authentifizierung beim MQTT-Broker.
+    password : str
+        Optionales Passwort für die Authentifizierung beim MQTT-Broker.
+    """
+    id: str = 'Karpo'
+    server: str = None
+    port: int = 1883
+    basetopic: str = 'karpo'
+    user: str = None
+    password: str = None
+
+
+class StrikerSettings(BaseModel, extra=Extra.allow):
+    """
+    Einstellungen für das Schlagwerk.
+
+    Attributes
+    ----------
+    priority : int
+        Mit welcher Priorität der Stundenschlag abgespielt werden soll.
+    basefolder : str
+        Pfad, in dem die verschiedenen Stile von Stundenschlägen liegen.
+    theme : str
+        Aktuell ausgewählter Stil für Stundenschläge.
+    """
+    priority: int = -1
+    basefolder: str = '../melodies/striker'
+    theme: str = 'westminster'
 
 
 class Settings(BaseSettings):
@@ -12,31 +75,12 @@ class Settings(BaseSettings):
 
     Attributes
     ----------
-    mqtt_id : str
-        Eindeutige Bezeichnung für den MQTT-Client.
-    mqtt_server : str
-        Adresse des MQTT-Brokers. Falls diese `None` ist, wird das MQTT-Modul
-        abgeschaltet.
-    mqtt_port : int
-        Port des MQTT-Brokers.
-    mqtt_basetopic : str
-        Basispfad, an den alle Pfade angehängt werden zur besseren
-        Unterscheidung.
-    mqtt_user : str
-        Optionaler Benutzer für die Authentifizierung beim MQTT-Broker.
-    mqtt_password : str
-        Optionales Passwort für die Authentifizierung beim MQTT-Broker.
-    jukebox_priority : int
-        Mit welcher Priorität die Melodien aus der Jukebox abgespielt werden
-        sollen.
-    jukebox_basefolder : str
-        Pfad, in dem die Jukebox nach Melodien sucht.
-    striker_priority : int
-        Mit welcher Priorität der Stundenschlag abgespielt werden soll.
-    striker_basefolder : str
-        Pfad, in dem die verschiedenen Stile von Stundenschlägen liegen.
-    striker_theme : str
-        Aktuell ausgewählter Stil für Stundenschläge.
+    jukebox : JukeboxSettings
+        Einstellungen für die Jukebox.
+    mqtt : MqttSettings
+        Einstellungen für den MQTT-Client.
+    striker : StrikerSettings
+        Einstellungen für das Schlagwerk.
 
     Class Methods
     -------------
@@ -48,19 +92,10 @@ class Settings(BaseSettings):
     Config
         Interne Einstellungen für die Einstellungsklasse.
     """
-    mqtt_id: str = 'Karpo'
-    mqtt_server: str = None
-    mqtt_port: int = 1883
-    mqtt_basetopic: str = 'karpo'
-    mqtt_user: str = None
-    mqtt_password: str = None
 
-    jukebox_priority: int = 5
-    jukebox_basefolder: str = '../melodies/songs'
-
-    striker_priority: int = -1
-    striker_basefolder: str = '../melodies/striker'
-    striker_theme: str = 'westminster'
+    jukebox: JukeboxSettings = JukeboxSettings()
+    mqtt: MqttSettings = MqttSettings()
+    striker: StrikerSettings = StrikerSettings()
 
     @root_validator
     def save_settings(cls, values: Dict[str, Any]) -> Dict[str, Any]:
@@ -83,11 +118,20 @@ class Settings(BaseSettings):
         Die gleichen Einstellungen ohne irgendwelche Veränderungen.
         """
         path = cls.__config__.cfg_file_path
-        if path.exists():
-            encoding = cls.__config__.cfg_file_encoding
-            ascii = cls.__config__.cfg_file_ascii
-            with path.open('w', encoding=encoding) as f:
-                json.dump(values, f, ensure_ascii=ascii, indent=2)
+        if not path.exists(): return values
+
+        encoding = cls.__config__.cfg_file_encoding
+        ascii = cls.__config__.cfg_file_ascii
+
+        def serialize_basemodel(model: BaseModel):
+            if isinstance(model, BaseModel):
+                return model.dict()
+            else:
+                raise TypeError(f'{type(model)} is not serializable!')
+
+        with path.open('w', encoding=encoding) as f:
+            json.dump(values, f, ensure_ascii=ascii, indent=2,
+                      default=serialize_basemodel)
         return values
 
     class Config:
@@ -126,6 +170,7 @@ class Settings(BaseSettings):
         cfg_file_ascii: bool = False
         cfg_file_encoding: str = 'utf-8'
         cfg_file_path: Path = Path('config.json')
+        env_nested_delimiter = '__'
         env_prefix: str = 'karpo_'
         validate_assignment: bool = True
 

@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from typing import Any, Callable, Dict
 
-from .settings import Settings
+from .settings import MqttSettings, Settings
 
 
 class MqttClient:
@@ -16,7 +16,7 @@ class MqttClient:
         Gibt an, ob eine Verbindung erfolgreich aufgebaut wurde.
     client : mqtt.Client
         Das MQTT-Client-Objekt, mit dem eigentlich interagiert wird.
-    settings : Settings
+    settings : MqttSettings
         Einstellungsobjekt, über das die MQTT-Einstellungen abgefragt werden.
     _subscriptions : Dict[str, Callable[[str, bytes], None]]
         Objekt, das alle von Callbacks abgehorchten Kanäle enthält.
@@ -41,21 +41,21 @@ class MqttClient:
         Ein Loop für die Abarbeitung der eintreffenden und ausgehenden
         Nachrichten wird asynchron gestartet.
         """
-        self.settings: Settings = Settings()
+        self.settings: MqttSettings = Settings().mqtt
         self.connected: bool = False
         self.client: mqtt.Client = None
         self._subscriptions: Dict[str, Callable[[str, bytes], None]] = dict()
 
-        if not self.settings.mqtt_server: return
+        if not self.settings.server: return
         self.client = mqtt.Client('Karpo', clean_session=False)
-        if self.settings.mqtt_user:
+        if self.settings.user:
             self.client.username_pw_set(
-                self.settings.mqtt_user, self.settings.mqtt_password)
+                self.settings.user, self.settings.password)
 
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.connect(
-            self.settings.mqtt_server, self.settings.mqtt_port)
+            self.settings.server, self.settings.port)
 
         self.client.loop_start()
 
@@ -78,7 +78,7 @@ class MqttClient:
             Ob es sich um die „last known good“ bzw. retained-Nachricht
             handelt, standardmäßig nicht der Fall.
         """
-        self.client.publish(f'{self.settings.mqtt_basetopic}/{topic}', payload,
+        self.client.publish(f'{self.settings.basetopic}/{topic}', payload,
                             qos=qos, retain=retain)
 
     def subscribe(
@@ -97,7 +97,7 @@ class MqttClient:
             Liste der Topics, über die das Callback informiert werden soll.
         """
         for t in topics:
-            topic = f'{self.settings.mqtt_basetopic}/{t}'
+            topic = f'{self.settings.basetopic}/{t}'
             print(f'MQTT-Sub: Subscribed to {topic}.')
             self._subscriptions[topic] = callback
             self.client.subscribe(topic)
@@ -114,5 +114,5 @@ class MqttClient:
         """Internes Callback, das Nachrichten entgegennimmt."""
         print(f'MQTT-Msg: {msg.topic}: {msg.payload}')
         if msg.topic not in self._subscriptions: return
-        topic = msg.topic.removeprefix(f'{self.settings.mqtt_basetopic}/')
+        topic = msg.topic.removeprefix(f'{self.settings.basetopic}/')
         self._subscriptions[msg.topic](topic, msg.payload)

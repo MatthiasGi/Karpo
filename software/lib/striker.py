@@ -6,7 +6,7 @@ import time
 
 from .carillon import Carillon
 from .melody import Melody
-from .settings import Settings
+from .settings import Settings, StrikerSettings
 
 
 class Striker:
@@ -22,7 +22,7 @@ class Striker:
         Das Carillon, auf dem geschlagen werden soll.
     folder : Path
         Pfad des Ordners mit aktuellem Theme.
-    settings : Settings
+    settings : StrikerSettings
         Einstellungsobjekt, das globale Einstellungen bereithält.
     theme : str
         Theme, das die Geläutart vorgibt.
@@ -44,7 +44,7 @@ class Striker:
             Carillon-Objekt, auf dem gespielt wird.
         """
         self.carillon: Carillon = carillon
-        self.settings: Settings = Settings()
+        self.settings: StrikerSettings = Settings().striker
 
         for q in range(0, 60, 15):
             schedule.every().hour.at(f':{q:02d}').do(self._strike)
@@ -59,23 +59,23 @@ class Striker:
     @property
     def basefolder(self) -> Path:
         """Ordner, in dem sich die Theme-Ordner befinden."""
-        return Path(self.settings.striker_basefolder)
+        return Path(self.settings.basefolder)
 
     @property
     def folder(self) -> Path:
         """Ordner, in dem sich die aktuellen Theme-Dateien befinden."""
-        return self.basefolder / self.settings.striker_theme
+        return self.basefolder / self.theme
 
     @property
     def theme(self) -> str:
         """Name des aktuell verwendeten Themes."""
-        return self.settings.striker_theme
+        return self.settings.theme
 
     @theme.setter
     def theme(self, value: str) -> None:
         """Stellt ein neue Theme ein, sofern das vorhanden ist."""
         path = self.basefolder / value
-        if path.is_dir(): self.settings.striker_theme = value
+        if path.is_dir(): self.settings.theme = value
 
     def _strike(self) -> None:
         """Interne Methode, die das eigentliche Stundengeläut auslöst."""
@@ -97,5 +97,11 @@ class Striker:
             if hours == 0: hours = 12
             if hpath.exists(): melody += Melody.from_file(hpath) * hours
 
+        # Ggf. Einstellungen für die Melodie übernehmen
+        if self.theme in self.settings.themes:
+            cfg = self.settings.themes[self.theme]
+            if 'transpose' in cfg: melody.transpose = cfg['transpose']
+            if 'tempo' in cfg: melody.tempo = cfg['tempo']
+
         # Melodie wiedergeben
-        self.carillon.play(melody, self.settings.striker_priority)
+        self.carillon.play(melody, self.settings.priority)
