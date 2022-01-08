@@ -62,10 +62,16 @@ class StrikerSettings(BaseModel, extra=Extra.allow):
         Pfad, in dem die verschiedenen Stile von Stundenschlägen liegen.
     theme : str
         Aktuell ausgewählter Stil für Stundenschläge.
+    nightmuter_start : str
+        Startzeit, um die die Nachtabschaltung erfolgen soll.
+    nightmuter_end : str
+        Zeit, um die die Nachtabschaltung aufgehoben werden soll.
     """
     priority: int = -1
     basefolder: str = '../melodies/striker'
     theme: str = 'default'
+    nightmuter_start: str = '21:00'
+    nightmuter_end: str = '8:00'
 
 
 class Settings(BaseSettings):

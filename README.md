@@ -83,6 +83,15 @@ Folgende Themes sind definiert:
   Glocken (*Josef* D2#, *Maria* C2#).
 * `westminster`: Der klassische Westminster-Schlag.
 
+Ferner können einzelne Observer angehängt werden, die das Verhalten des
+Schlagwerks anpassen.
+
+#### Nachtabschaltung
+Die Klasse `lib.nightmuter.Nightmuter` stellt sicher, dass das Schlagwerk nicht
+in der Nacht auslöst. Dazu wird in den Einstellungen zum Schlagwerk `striker`
+eine Abschaltungsstartzeit `nightmuter_start` und Endzeit `nightmuter_end`
+angegeben.
+
 [^sonimusicae]: Das Carillon ist der Seite
   http://sonimusicae.free.fr/carillondegand-en.html entnommen.
 [^grandorgue]: https://github.com/GrandOrgue/grandorgue

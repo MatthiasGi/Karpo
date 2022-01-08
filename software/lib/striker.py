@@ -3,6 +3,7 @@ from pathlib import Path
 import schedule
 from threading import Thread
 import time
+from typing import Callable, List
 
 from .carillon import Carillon
 from .melody import Melody
@@ -22,6 +23,8 @@ class Striker:
         Das Carillon, auf dem geschlagen werden soll.
     folder : Path
         Pfad des Ordners mit aktuellem Theme.
+    observers : List[Callable[[Melody, int, int], Melody]]
+        Liste an registrierten Observern für einen Schlag.
     settings : StrikerSettings
         Einstellungsobjekt, das globale Einstellungen bereithält.
     theme : str
@@ -29,6 +32,8 @@ class Striker:
 
     Methods
     -------
+    subscribe(observer)
+        Registriert eine Callbackmethode.
     _strike()
         Interne Methode zum Auslösen des eigentlichen Stundengeläuts.
     """
@@ -45,6 +50,7 @@ class Striker:
         """
         self.carillon: Carillon = carillon
         self.settings: StrikerSettings = Settings().striker
+        self.observers: List[Callable[[Melody, int, int], Melody]] = list()
 
         for q in range(0, 60, 15):
             schedule.every().hour.at(f':{q:02d}').do(self._strike)
@@ -77,6 +83,21 @@ class Striker:
         path = self.basefolder / value
         if path.is_dir(): self.settings.theme = value
 
+    def subscribe(
+        self, observer: Callable[[Melody, int, int], Melody]
+    ) -> None:
+        """
+        Registriert eine Methode, die über auszuführende Schläge informiert
+        werden soll. Sie muss die Parameter Melodie, Stundenzahl und
+        Viertelstundenzahl aufnehmen.
+
+        Parameters
+        ----------
+        observer : Callable[[Melody, int, int], Melody]
+            Callback-Methode, die informiert werden soll.
+        """
+        self.observers.append(observer)
+
     def _strike(self) -> None:
         """Interne Methode, die das eigentliche Stundengeläut auslöst."""
 
@@ -93,15 +114,19 @@ class Striker:
         # Bei Bedarf Stundenschlag anfügen
         if quarters == 0:
             hpath = self.folder / 'h.mid'
-            hours %= 12
-            if hours == 0: hours = 12
-            if hpath.exists(): melody += Melody.from_file(hpath) * hours
+            h = hours % 12
+            if h == 0: h = 12
+            if hpath.exists(): melody += Melody.from_file(hpath) * h
 
         # Ggf. Einstellungen für die Melodie übernehmen
         if self.theme in self.settings.themes:
             cfg = self.settings.themes[self.theme]
             if 'transpose' in cfg: melody.transpose = cfg['transpose']
             if 'tempo' in cfg: melody.tempo = cfg['tempo']
+
+        # Alle Observer noch um ihre Meinung fragen und ggf. abbrechen
+        for o in self.observers: melody = o(melody, hours, quarters)
+        if melody is None: return
 
         # Melodie wiedergeben
         self.carillon.play(melody, self.settings.priority)
