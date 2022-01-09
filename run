@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+# Updates ziehen
+git pull
+
+# GrandOrgue ausführen
+GrandOrgue &
+sleep 10
+
+# Skript ausführen
+cd software
+pipenv run python main.py

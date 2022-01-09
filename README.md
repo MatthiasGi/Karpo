@@ -16,14 +16,73 @@ gruppieren sich verschiedene Funktionen zur Erweiterung.
 
 
 ## Installation
-Hier folgen zeitnah einige Sätze zum Ablauf der Installation. Einige Stichpunkte
-bereits vorab:
-* Installation von GrandOrgue
-* Öffnen der Orgeldatei und MIDI-Einstellungen für Töne und Lautstärke
-* Vorbereitung mittels `pipenv`
+Im Folgenden wird die Installation im üblichsten Use-Case beschrieben: Einem
+RaspberryPi-Server, der auch über Inputs für eine Klingel verfügt.
+
+1. Einrichten der microSD-Karte: Es empfiehlt sich, eine Standard Installation
+   mit Raspberry Pi OS vorzunehmen. Dort ist ein Desktop vorhanden. Der
+   [Raspberry Pi Imager](https://www.raspberrypi.com/software/) verfügt über ein
+   verstecktes Menü, dass sich über <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+   <kbd>X</kbd> erreichen lässt. Dort können ein Hostname (etwa `karpo.local`)
+   gewählt, SSH aktiviert, WLAN vorkonfiguriert, die Spracheinstellungen
+   festgelegt und der Einrichtungsassistent übersprungen werden.
+2. microSD-Karte in den Pi (etwa RPi Zero) einlegen, starten, warten und eine
+   Verbindung über SSH herstellen.
+3. VNC über `sudo raspi-config` aktivieren: Interface Options / VNC
+4. Updates einspielen:
+   `sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade`
+5. Installieren der Audiokarte (abhängig vom konkreten DAC, in meinem Falle des
+   Pimoroni pHAT DAC[^pimoroni] etwa über:
+   `curl https://get.pimoroni.com/phatdac | bash`)
+6. GrandOrgue installieren[^grandorgue install]:
+```
+echo 'deb http://download.opensuse.org/repositories/home:/e9925248:/grandorgue/Raspbian_10/ /' | sudo tee /etc/apt/sources.list.d/home:e9925248:grandorgue.list
+curl -fsSL https://download.opensuse.org/repositories/home:e9925248:grandorgue/Raspbian_10/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_e9925248_grandorgue.gpg > /dev/null
+sudo apt update
+sudo apt -y install grandorgue
+```
+7. Abhängigkeiten für die Pythonskripts installieren: `pip install pipenv`
+8. Computer neustarten.
+
+### Konfiguration
+Nach dem Neustart kann die Einrichtung fortgesetzt werden.
+
+1. Neue Verbindung über SSH aufbauen.
+2. Testen der Audiokarte durch Anschluss eines Lautsprechers und
+   `sudo speaker-test -l5 -c2 -t wav`
+3. Dieses Repository runterladen: `git clone https://github.com/MatthiasGi/Karpo.git`
+4. Weitere Konfiguration über VNC-Verbindung.
+5. GrandOrgue starten und konfigurieren:
+   1. Carillon-Orgel `~/Karpo/carillon/carillon.organ` öffnen.
+   2. Rechtsklick auf Manual, dort folgende Einstellungen vornehmen:
+      - Device: Any device
+      - Event: 9x Note
+      - Channel: Any channel
+      - Lowest key: 0
+      - Highest key: 127
+      - Lowest velocity: 1
+      - Highest velocity: 127
+   3. OK, dann im Hauptfenstermenü auf Panel > Coupler manuals and volume. Dort
+      Rechtsklick auf den Master-Schweller und folgende Einstellungen vornehmen:
+      - Device: Any device
+      - Event: Bx Controller
+      - Channel: Any channel
+      - Controller-No: 7
+      - Lower limit: 0
+      - Upper limit: 127
+   4. OK, dann Panel schließen und Lautstärke fein abstimmen: Glocke anschlagen
+      und im Haupfenster Lautstärke hochregeln, bis in Ordnung.
+   5. Im Hauptfenstermenü File > Save
+6. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
+
+Was hier noch fehlt:
+* Anschluss des Raspberry Pis
 * Einstellungsdatei (auf Basis der `config.example.json`)
 * Autostart des Runscripts (folgt!)
-* Anschluss im Falle eines Raspberry Pis
+
+
+[^pimoroni]: https://learn.pimoroni.com/article/raspberry-pi-phat-dac-install
+[^grandorgue install]: https://software.opensuse.org/download/package?project=home:e9925248:grandorgue&package=grandorgue
 
 
 ## Einstellungen
