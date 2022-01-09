@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 git pull
 
 # GrandOrgue ausführen
-GrandOrgue &
+GrandOrgue 1>&- 2>&- &
 sleep 10
 
 # Skript ausführen

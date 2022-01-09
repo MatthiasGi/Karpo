@@ -51,8 +51,13 @@ Nach dem Neustart kann die Einrichtung fortgesetzt werden.
 2. Testen der Audiokarte durch Anschluss eines Lautsprechers und
    `sudo speaker-test -l5 -c2 -t wav`
 3. Dieses Repository runterladen: `git clone https://github.com/MatthiasGi/Karpo.git`
-4. Weitere Konfiguration über VNC-Verbindung.
-5. GrandOrgue starten und konfigurieren:
+4. In Verzeichnis wechseln (`cd ~/Karpo/software`) und Abhängigkeiten
+   installieren: `pipenv sync`.
+   * Ggf. ist das manuelle nachinstallieren von `alsa/asoundlib.h` und
+     `jack/jack.h` nötig, dann zuvor
+     `sudo apt install libasound2-dev libjack-jackd2-dev` ausführen.
+5. Weitere Konfiguration über VNC-Verbindung.
+6. GrandOrgue starten und konfigurieren:
    1. Carillon-Orgel `~/Karpo/carillon/carillon.organ` öffnen.
    2. Rechtsklick auf Manual, dort folgende Einstellungen vornehmen:
       - Device: Any device
@@ -73,7 +78,7 @@ Nach dem Neustart kann die Einrichtung fortgesetzt werden.
    4. OK, dann Panel schließen und Lautstärke fein abstimmen: Glocke anschlagen
       und im Haupfenster Lautstärke hochregeln, bis in Ordnung.
    5. Im Hauptfenstermenü File > Save
-6. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
+7. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
 
 Was hier noch fehlt:
 * Anschluss des Raspberry Pis

@@ -13,8 +13,9 @@ if __name__ == '__main__':
     AngelusPlayer(s)
 
     m = MqttClient()
-    Jukebox(c, m)
-    MqttController(s, m)
+    if m is not None:
+        Jukebox(c, m)
+        MqttController(s, m)
 
     while True:
         time.sleep(0.1)
