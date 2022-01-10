@@ -99,7 +99,7 @@ class GpioBell:
         melody = Melody.from_file(self.settings.melody)
         melody.transpose = self.settings.transpose
         melody.tempo = self.settings.tempo
-        self.striker.carillon.play(melody, self.settings.priority)
+        self.carillon.play(melody, self.settings.priority)
 
     def _loop(self) -> None:
         """Interne Methode, die dauerhaft läuft und den Knopfstatus prüft."""
