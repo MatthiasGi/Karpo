@@ -89,7 +89,7 @@ Nach dem Neustart kann die Einrichtung fortgesetzt werden.
       und im Haupfenster Lautstärke hochregeln, bis in Ordnung.
    5. Im Hauptfenstermenü File > Save
 8. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
-9. Beispielkonfiguration im Softwareverzeichnis (`cd Karpo/Software`) als Basis
+9. Beispielkonfiguration im Softwareverzeichnis (`cd Karpo/software`) als Basis
    für die eigene Konfiguration wählen: `cp config.example.json config.json`. In
    der Datei selber alle Einstellungen vornehmen.
 10. Startupdatei im Hauptverzeichnis (`cd ..`) an die richtige Stelle kopieren:
