@@ -108,6 +108,7 @@ class GpioBell:
 
             if self.pressed:
                 self._publish_btn_state(True)
+                self.play()
                 while self.pressed:
                     time.sleep(0.1)
                 self._publish_btn_state(False)
