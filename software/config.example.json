@@ -47,6 +47,7 @@
     "priority": -1,
     "basefolder": "../melodies/striker",
     "theme": "default",
+    "themes": {},
     "nightmuter_start": "21:00",
     "nightmuter_end": "8:00"
   }

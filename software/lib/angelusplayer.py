@@ -47,6 +47,7 @@ class AngelusPlayer:
         for t in self.settings.times.split(','):
             h, q = t.split(':')
             times.append((int(h), int(q) // 15))
+        return times
 
     def _play_angelus(
         self, melody: Melody, hours: int, quarters: int
