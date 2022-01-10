@@ -27,6 +27,36 @@ class AngelusSettings(BaseModel):
     tempo: float = 1
 
 
+class BellSettings(BaseModel):
+    """
+    Einstellungen für die GPIO-Klingelfunktion.
+
+    Attributes
+    ----------
+    button : str
+        Pinbezeichnung, an der der Klingeleingang liegt (bspw. `'D26'`). Falls
+        `None`, wird das Modul gar nicht geladen.
+    melody : str
+        Pfad zur abzuspielenden Melodie beim Drücken der Klingel. Wenn nur über
+        MQTT informiert werden soll, dann hier auf `None` setzen.
+    playtime : float
+        Anzahl an Sekunden, die der Button keinen neuen Klingelton auslösen
+        soll.
+    transpose : int
+        Transponierungseinstellung für die abzuspielende Melodie.
+    tempo : float
+        Tempoeinstellung für die abzuspielende Melodie.
+    priority : int
+        Priorität der abzuspielenden Melodie.
+    """
+    button: str = None
+    melody: str = '../melodies/songs/Westminster Quarters.mid'
+    playtime: float = 10
+    transpose: int = 0
+    tempo: float = 1
+    priority: int = 10
+
+
 class DirektoriumSettings(BaseModel):
     """
     Einstellungen für das Direktorium.
@@ -166,6 +196,8 @@ class Settings(BaseSettings):
     ----------
     angelus : AngelusSettings
         Einstellungen für den Angelus.
+    bell : BellSettings
+        Einstellungen für eine Hardware-Klingel via GPIO-Pins.
     direktorium : DirektoriumSettings
         Einstellungen für das Direktorium.
     jukebox : JukeboxSettings
@@ -187,6 +219,7 @@ class Settings(BaseSettings):
     """
 
     angelus: AngelusSettings = AngelusSettings()
+    bell: BellSettings = BellSettings()
     direktorium: DirektoriumSettings = DirektoriumSettings()
     jukebox: JukeboxSettings = JukeboxSettings()
     mqtt: MqttSettings = MqttSettings()

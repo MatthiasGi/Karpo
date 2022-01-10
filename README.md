@@ -52,12 +52,22 @@ Nach dem Neustart kann die Einrichtung fortgesetzt werden.
    `sudo speaker-test -l5 -c2 -t wav`
 3. Dieses Repository runterladen: `git clone https://github.com/MatthiasGi/Karpo.git`
 4. In Verzeichnis wechseln (`cd ~/Karpo/software`) und Abhängigkeiten
-   installieren: `pipenv sync`.
+   installieren: `pipenv install --system`.
    * Ggf. ist das manuelle nachinstallieren von `alsa/asoundlib.h` und
      `jack/jack.h` nötig, dann zuvor
      `sudo apt install libasound2-dev libjack-jackd2-dev` ausführen.
-5. Weitere Konfiguration über VNC-Verbindung.
-6. GrandOrgue starten und konfigurieren:
+   * Das Skript kann nicht in einer virtuellen Umgebung laufen, da
+     CircuityPython dort nicht lauffähig ist.
+5. CircuityPython installieren[^circuitpython] (Reboot wird im Anschluss
+   durchgeführt):
+   ```
+   cd ~
+   sudo pip install --upgrade adafruit-python-shell
+   wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+   sudo python raspi-blinka.py
+   ```
+6. Weitere Konfiguration über VNC-Verbindung.
+7. GrandOrgue starten und konfigurieren:
    1. Carillon-Orgel `~/Karpo/carillon/carillon.organ` öffnen.
    2. Rechtsklick auf Manual, dort folgende Einstellungen vornehmen:
       - Device: Any device
@@ -78,16 +88,17 @@ Nach dem Neustart kann die Einrichtung fortgesetzt werden.
    4. OK, dann Panel schließen und Lautstärke fein abstimmen: Glocke anschlagen
       und im Haupfenster Lautstärke hochregeln, bis in Ordnung.
    5. Im Hauptfenstermenü File > Save
-7. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
-
-Was hier noch fehlt:
-* Anschluss des Raspberry Pis
-* Einstellungsdatei (auf Basis der `config.example.json`)
-* Autostart des Runscripts (folgt!)
+8. VNC-Verbindung schließen, da nicht mehr nötig. Zurück zu SSH.
+9. Beispielkonfiguration im Softwareverzeichnis (`cd Karpo/Software`) als Basis
+   für die eigene Konfiguration wählen: `cp config.example.json config.json`. In
+   der Datei selber alle Einstellungen vornehmen.
+10. Startupdatei im Hauptverzeichnis (`cd ..`) an die richtige Stelle kopieren:
+    `sudo cp Karpo.desktop /etc/xdg/autostart`.
 
 
 [^pimoroni]: https://learn.pimoroni.com/article/raspberry-pi-phat-dac-install
 [^grandorgue install]: https://software.opensuse.org/download/package?project=home:e9925248:grandorgue&package=grandorgue
+[^circuitpython]: https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi
 
 
 ## Einstellungen
@@ -248,3 +259,22 @@ globale Einstellungen über MQTT vorzunehmen. Im Einzelnen sind das:
 * `control/theme/list/get`: Listet unter `control/theme/list` alle verfügbaren
   Themes auf.
 * `control/theme/set`: Stellt das Theme ein und teilt es wie oben mit.
+
+
+## GPIO-Interaktion
+Auf einem RaspberryPi lässt sich ein Klingelknopf hinzufügen, der dann über die
+Klasse `lib.gpiobell.GpioBell` ausgewertet wird. Verfügbare Einstellungen in der
+Sektion `bell` dafür sind:
+* `button`: Portbezeichnung, an der die Klingel angeschlossen ist (etwa `D26`).
+  Wenn diese Einstellung `null` ist, wird das GPIO-Bell-Modul abgeschaltet.
+* `melody`: Abzuspielende Melodie, wenn der Knopf gedrückt wird (oder `null`,
+  wenn auf das Spielen einer Melodie verzichtet werden soll).
+* `playtime`: Wird der Knopf mehrfach hintereinander gedrückt, wird die Melodie
+  nur neu abgespielt, wenn dazu mindestens die hier angegebene Zeit in Sekunden
+  verstrichen ist.
+* `transpose`: Transponierung der Melodie.
+* `tempo`: Tempo der Melodie.
+* `priority`: Priorität, mit der die Melodie auf dem Carillon abgespielt wird.
+
+Sofern ein MQTT-Client läuft, wird auch über den Kanal `bell/state` über den
+Knopfstatus informiert.

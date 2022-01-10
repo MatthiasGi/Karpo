@@ -11,4 +11,4 @@ sleep 10
 
 # Skript ausführen
 cd software
-pipenv run python main.py
+./main.py

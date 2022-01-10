@@ -1,25 +1,53 @@
 {
+  "angelus": {
+    "times": null,
+    "path": "../melodies/songs/Lourdes Lied.mid",
+    "transpose": 0,
+    "tempo": 1.0
+  },
+  "bell": {
+    "button": null,
+    "melody": "../melodies/songs/Westminster Quarters.mid",
+    "playtime": 10.0,
+    "transpose": 0,
+    "tempo": 1.0,
+    "priority": 10
+  },
+  "direktorium": {
+    "cachedir": "./cache",
+    "eastermute": false,
+    "kalender": "deutschland",
+    "theme_nichtgeboten": null,
+    "theme_geboten": null,
+    "theme_fest": null,
+    "theme_hochfest": null,
+    "antiphon": "21:00",
+    "antiphon_christmas": "../melodies/songs/Alma Redemptoris Mater.mid",
+    "antiphon_lent": "../melodies/songs/Ave Regina caelorum.mid",
+    "antiphon_easter": "../melodies/songs/Regina caeli laetare.mid",
+    "antiphon_ordinary": "../melodies/songs/Salve Regina.mid",
+    "antiphon_transpose": 0,
+    "antiphon_tempo": 1
+  },
   "jukebox": {
     "priority": 5,
     "basefolder": "../melodies/songs"
   },
   "mqtt": {
     "id": "Karpo",
-    "server": "localhost",
+    "server": null,
     "port": 1883,
     "basetopic": "karpo",
-    "user": "karpo",
-    "password": null
+    "user": null,
+    "password": null,
+    "controller": true,
+    "control_volume": 1.0
   },
   "striker": {
     "priority": -1,
     "basefolder": "../melodies/striker",
-    "theme": "westminster",
-    "themes": {
-      "westminster": {
-        "transpose": -12,
-        "tempo": 0.8
-      }
-    }
+    "theme": "default",
+    "nightmuter_start": "21:00",
+    "nightmuter_end": "8:00"
   }
 }

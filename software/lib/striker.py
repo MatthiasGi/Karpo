@@ -55,7 +55,7 @@ class Striker:
         for q in range(0, 60, 15):
             schedule.every().hour.at(f':{q:02d}').do(self._strike)
 
-        def thread():
+        def thread() -> None:
             while True:
                 schedule.run_pending()
                 time.sleep(0.1)

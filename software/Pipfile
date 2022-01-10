@@ -10,7 +10,6 @@ paho-mqtt = "*"
 python-rtmidi = "*"
 schedule = "*"
 requests = "*"
-adafruit-python-shell = "*"
 
 [dev-packages]
 

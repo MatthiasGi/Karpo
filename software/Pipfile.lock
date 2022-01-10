@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ee8a08a3054dd7290cd2959a52e67168b140635a8fc0e0849c15077db8c6faeb"
+            "sha256": "12565980fbf0e5265f00aefeeea2900542fb72555f66dce9be544995bf7276e6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,26 +16,6 @@
         ]
     },
     "default": {
-        "adafruit-platformdetect": {
-            "hashes": [
-                "sha256:989d76d524a83bbbf6a7ea8217955ae7ea691d0b07705bb2243a7273a9729112"
-            ],
-            "markers": "python_full_version >= '3.6.0'",
-            "version": "==3.19.1"
-        },
-        "adafruit-python-shell": {
-            "hashes": [
-                "sha256:47e358b33c0e4452842296ea28702bb0828a384495b9f3e08f8f835c016346b8"
-            ],
-            "index": "pypi",
-            "version": "==1.3.3"
-        },
-        "args": {
-            "hashes": [
-                "sha256:a785b8d837625e9b61c39108532d95b85274acd679693b71ebb5156848fcf814"
-            ],
-            "version": "==0.1.0"
-        },
         "certifi": {
             "hashes": [
                 "sha256:78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872",
@@ -50,12 +30,6 @@
             ],
             "markers": "python_version >= '3'",
             "version": "==2.0.10"
-        },
-        "clint": {
-            "hashes": [
-                "sha256:05224c32b1075563d0b16d0015faaf9da43aa214e4a2140e51f08789e7a4c5aa"
-            ],
-            "version": "==0.5.1"
         },
         "idna": {
             "hashes": [
@@ -161,7 +135,7 @@
                 "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e",
                 "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==4.0.1"
         },
         "urllib3": {
