@@ -6,6 +6,8 @@ from lib import AngelusPlayer, Carillon, GpioBell, DirektoriumProxy, Jukebox, \
 
 
 if __name__ == '__main__':
+    print('\n\n------------------------------------------------------------\n')
+    print('Hello world! This is Karpo speaking!')
     c = Carillon()
     s = Striker(c)
     Nightmuter(s)
@@ -18,6 +20,8 @@ if __name__ == '__main__':
         MqttController(s, m)
 
     GpioBell(c, m)
+
+    print('Vorbereitungen abgeschlossen, mache mich an das unendliche Warten…')
 
     while True:
         time.sleep(0.1)

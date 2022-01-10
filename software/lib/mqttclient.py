@@ -78,6 +78,7 @@ class MqttClient:
             Ob es sich um die „last known good“ bzw. retained-Nachricht
             handelt, standardmäßig nicht der Fall.
         """
+        print(f'MQQT-Pub: {topic}: {payload}')
         self.client.publish(f'{self.settings.basetopic}/{topic}', payload,
                             qos=qos, retain=retain)
 

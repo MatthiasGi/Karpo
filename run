@@ -11,4 +11,4 @@ sleep 10
 
 # Skript ausführen
 cd software
-./main.py
+./main.py > karpo.log

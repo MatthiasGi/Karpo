@@ -7,3 +7,6 @@ software/config.json
 
 # Cache des Direktoriums aussparen
 cache/
+
+# Log-Dateien aussparen
+software/karpo.log
