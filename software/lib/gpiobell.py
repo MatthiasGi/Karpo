@@ -66,7 +66,8 @@ class GpioBell:
         globals()['digitalio'] = import_module('digitalio')
 
         # Knopf-Eingang vorbereiten
-        self.button = digitalio.DigitalInOut(board[self.settings.button])
+        self.button = digitalio.DigitalInOut(
+            board.__dict__[self.settings.button])
         self.button.direction = digitalio.Direction.INPUT
 
         # Vorbereiten des MQTT-Clients
