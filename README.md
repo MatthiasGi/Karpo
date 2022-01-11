@@ -278,3 +278,92 @@ Sektion `bell` dafür sind:
 
 Sofern ein MQTT-Client läuft, wird auch über den Kanal `bell/state` über den
 Knopfstatus informiert.
+
+
+## Integration in Home Assistant
+Für die Integration in Home Assistant lässt sich die MQTT-Plattform nutzen. So
+lässt sich die Lautstärke beispielsweise verändern über
+```
+number:
+  - platform: mqtt
+    command_topic: karpo/control/volume/set
+    min: 0
+    max: 100
+    name: Karpo Lautstärke
+    state_topic: karpo/control/volume
+    step: 1
+    object_id: karpo_volume
+    icon: mdi:volume-medium
+    value_template: "{{ int(float(value) * 100) if is_number(value) }}"
+    command_template: "{{ float(value / 100) if is_number(value) }}"
+```
+
+Damit die Lautstärke auch direkt zum Start des Servers zur Verfügung steht, kann
+sie über eine Automatisierung eingelesen werden:
+```
+automation:
+  - alias: "Karpo: Lautstärke ermitteln"
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - delay: "00:05:00"
+      - service: mqtt.publish
+        data:
+          topic: "karpo/control/volume/get"
+```
+
+Die `GpioBell` lässt sich über folgenden Sensor einlesen:
+```
+binary_sensor:
+  - platform: mqtt
+    state_topic: karpo/bell/state
+    device_class: sound
+    icon: mdi:bell-badge
+    name: Karpo Türklingel
+    object_id: karpo_bell
+    payload_off: "0"
+    payload_on: "1"
+```
+
+Ein Skript zum Abspielen einer Melodie könnte wie folgt lauten:
+```
+script:
+  karpo_play:
+    alias: Karpo-Melodie spielen
+    description: Spielt eine Melodie mittels Karpo.
+    icon: mdi:play-circle-outline
+    mode: queued
+    max: 10
+    fields:
+      song:
+        name: Lied
+        description: Name des Lieds.
+        required: true
+        example: Salve Regina
+      transpose:
+        name: Transponierung
+        description: Transponierung des Liedes, falls gewünscht.
+        required: false
+        example: "-12"
+        default: "0"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "karpo/jukebox/transpose/set"
+          payload_template: "{{ int(transpose) }}"
+      - service: mqtt.publish
+        data:
+          topic: "karpo/jukebox/play"
+          payload_template: "{{ song }}"
+```
+
+Ein Knopf zum Abbrechen des Abspielens:
+```
+button:
+  - platform: mqtt
+    name: Karpo stoppen
+    command_topic: karpo/control/stop
+    icon: mdi:stop-circle-outline
+    object_id: karpo_stop
+```
