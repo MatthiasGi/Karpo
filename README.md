@@ -181,6 +181,20 @@ allerdings nur in **Zusammenhang mit dem Stundengeläut**. Ist das also stumm
 Angelusmelodie wird mittels `path` hinterlegt und lässt sich auch Transponieren
 (`transpose`) bzw. im Tempo anpassen (`tempo`).
 
+#### Festspiel
+Zu beliebigen Tagen und Uhrzeiten kann das Geläut aus festlichen Gründen mit
+Melodien angereichert werden. Dafür erwartet der
+`lib.festiveplayer.FestivePlayer` in den Einstellungen unter `festive` ein
+Dictionary `festives`, das einen Namen für ein Fest mit einem weiteren
+Dictionary verknüpft. Dort können folgende Informationen vorhanden sein:
+* `day`: Tag, an dem die Melodie spielen soll
+* `month`: Monat, an dem die Melodie spielen soll
+* `time`: Uhrzeit, zu der (nach dem Uhrschlag) die Melodie geschlagen werden
+  soll
+* `melody`: Pfad zur zu spielenden Melodie
+* `transpose`: Transponierung der Melodie (optional)
+* `tempo`: Tempofaktor für die Melodie (optional)
+
 
 ## Direktorium
 Die aus Vorprojekten entlehnte Bibliothek `lib.direktorium` macht Angaben über

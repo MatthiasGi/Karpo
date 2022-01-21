@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import time
 
-from lib import AngelusPlayer, Carillon, GpioBell, DirektoriumProxy, Jukebox, \
-    MqttClient, MqttController, Nightmuter, Striker
+from lib import AngelusPlayer, Carillon, FestivePlayer, GpioBell, \
+    DirektoriumProxy, Jukebox, MqttClient, MqttController, Nightmuter, Striker
 
 
 if __name__ == '__main__':
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     Nightmuter(s)
     DirektoriumProxy(s)
     AngelusPlayer(s)
+    FestivePlayer(s)
 
     m = MqttClient()
     if m.client is not None:

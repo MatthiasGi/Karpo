@@ -29,6 +29,52 @@
     "antiphon_transpose": 0,
     "antiphon_tempo": 1
   },
+  "festive": {
+    "festives": {
+      "thomas-aquin-1": {
+        "day": 28,
+        "month": 1,
+        "time": "9:00",
+        "melody": "../melodies/songs/494.mid",
+        "transpose": -12
+      },
+      "thomas-aquin-2": {
+        "day": 28,
+        "month": 1,
+        "time": "11:00",
+        "melody": "../melodies/songs/494.mid",
+        "transpose": -12
+      },
+      "thomas-aquin-3": {
+        "day": 28,
+        "month": 1,
+        "time": "13:00",
+        "melody": "../melodies/songs/494.mid",
+        "transpose": -12
+      },
+      "thomas-aquin-4": {
+        "day": 28,
+        "month": 1,
+        "time": "15:00",
+        "melody": "../melodies/songs/494.mid",
+        "transpose": -12
+      },
+      "thomas-aquin-5": {
+        "day": 28,
+        "month": 1,
+        "time": "17:00",
+        "melody": "../melodies/songs/494.mid",
+        "transpose": -12
+      },
+      "thomas-aquin-6": {
+        "day": 28,
+        "month": 1,
+        "time": "19:00",
+        "melody": "../melodies/songs/494-Amen.mid",
+        "transpose": -12
+      }
+    }
+  },
   "jukebox": {
     "priority": 5,
     "basefolder": "../melodies/songs"

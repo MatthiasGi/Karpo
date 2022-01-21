@@ -110,6 +110,18 @@ class DirektoriumSettings(BaseModel):
     antiphon_tempo = 1
 
 
+class FestiveSettings(BaseModel, extra=Extra.allow):
+    """
+    Einstellungen für den Fest-Player.
+
+    Attributes
+    ----------
+    festives : Dict[str, Dict[str, Any]]
+        Melodien, die zu Festen eingebaut werden sollen.
+    """
+    festives: Dict[str, Dict[str, Any]] = dict()
+
+
 class JukeboxSettings(BaseModel):
     """
     Einstellungen für die Jukebox.
@@ -204,6 +216,8 @@ class Settings(BaseSettings):
         Einstellungen für eine Hardware-Klingel via GPIO-Pins.
     direktorium : DirektoriumSettings
         Einstellungen für das Direktorium.
+    festive : FestiveSettings
+        Einstellungen für den Festplayer.
     jukebox : JukeboxSettings
         Einstellungen für die Jukebox.
     mqtt : MqttSettings
@@ -225,6 +239,7 @@ class Settings(BaseSettings):
     angelus: AngelusSettings = AngelusSettings()
     bell: BellSettings = BellSettings()
     direktorium: DirektoriumSettings = DirektoriumSettings()
+    festive: FestiveSettings = FestiveSettings()
     jukebox: JukeboxSettings = JukeboxSettings()
     mqtt: MqttSettings = MqttSettings()
     striker: StrikerSettings = StrikerSettings()
