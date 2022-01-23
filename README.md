@@ -217,6 +217,7 @@ Einzelnen sind das folgende Möglichkeiten:
 * `theme_geboten`: Ggf. alternatives Geläut-Theme für gebotene Gedenktage.
 * `theme_fest`: Ggf. alternatives Geläut-Theme für Feste.
 * `theme_hochfest`: Ggf. alternatives Geläut-Theme für Hochfeste.
+* `theme_sonntag`: Ggf. alternatives Geläut-Theme für Sonntage, die nicht durch Feste überlagert werden.
 * `antiphon`: Angabe zur Zeit, an deren Geläutanschluss sich eine Marianische
   Antiphon anschließen soll.
 * `antiphon_christmas`: Pfad zur Antiphon für die Weihnachtszeit (Alma
