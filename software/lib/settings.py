@@ -78,6 +78,8 @@ class DirektoriumSettings(BaseModel):
         Schlagwerktheme, das an Festen genutzt werden soll.
     theme_hochfest : str
         Schlagwerktheme, das an Hochfesten genutzt werden soll.
+    theme_sonntag : str
+        Schlagwerktheme für einen nicht anders belegten Sonntag.
     antiphon : str
         Zeit, nach deren Angabe die aktuelle marianische Antiphon gespielt
         werden soll. Bei None wird sie gar nicht gespielt.
@@ -101,6 +103,7 @@ class DirektoriumSettings(BaseModel):
     theme_geboten: str = None
     theme_fest: str = None
     theme_hochfest: str = None
+    theme_sonntag: str = None
     antiphon: str = '21:00'
     antiphon_christmas: str = '../melodies/songs/Alma Redemptoris Mater.mid'
     antiphon_lent: str = '../melodies/songs/Ave Regina caelorum.mid'

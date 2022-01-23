@@ -21,6 +21,7 @@
     "theme_geboten": null,
     "theme_fest": null,
     "theme_hochfest": null,
+    "theme_sonntag": null,
     "antiphon": "21:00",
     "antiphon_christmas": "../melodies/songs/Alma Redemptoris Mater.mid",
     "antiphon_lent": "../melodies/songs/Ave Regina caelorum.mid",

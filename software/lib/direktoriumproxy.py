@@ -92,7 +92,8 @@ class DirektoriumProxy:
 
     def _theme_selector(self) -> None:
         """Wählt ggf. nach Tagesrang ein anderes Theme aus."""
-        rank = self.direktorium.get()[0].rank
+        event = self.direktorium.get()[0]
+        rank = event.rank
         if rank == Rank.HOCHFEST and self.settings.theme_hochfest is not None:
             self.striker.theme = self.settings.theme_hochfest
             self.theme_modified = True
@@ -105,6 +106,9 @@ class DirektoriumProxy:
         elif rank == Rank.NICHTGEBOTEN and \
                 self.settings.theme_nichtgeboten is not None:
             self.striker.theme = self.settings.theme_nichtgeboten
+            self.theme_modified = True
+        elif 'sonntag' in event.title.lower():
+            self.striker.theme = self.settings.theme_sonntag
             self.theme_modified = True
         elif self.theme_modified:
             self.striker.theme = Settings().striker.theme

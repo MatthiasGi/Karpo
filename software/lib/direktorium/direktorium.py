@@ -70,7 +70,7 @@ class Direktorium:
         Online-API abgefragt.
         """
         if self.cache_dir is None:
-            return self.request_api(d.year, d.month, d.day)
+            return self.request_api(d.year, d.month, d.day).json()
 
         # Daten einlesen (ggf. herunterladen)
         dir = os.path.join(self.cache_dir, self.kalender)
