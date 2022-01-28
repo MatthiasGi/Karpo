@@ -45,15 +45,12 @@ class FestivePlayer:
     ) -> Melody:
         """Callback, das bei bestimmten Festen eine Melodie anhängt."""
         today = (date.today().day, date.today().month)
-        print(f'Festive: checking {today[0]}.{today[1]} {hours}:{quarters}')
         if today not in self.festives: return melody
 
         for d in self.festives[today]:
-            print(f'Festive: Found {d}')
             h, q = d['time'].split(':')
             if hours != int(h) or quarters != int(q) // 15: continue
 
-            print(f'Festive: Playing {d}')
             song = Melody.from_file(d['melody'])
             song.transpose = d.get('transpose', 0)
             song.tempo = d.get('tempo', 1)
