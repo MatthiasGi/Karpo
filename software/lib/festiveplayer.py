@@ -51,10 +51,13 @@ class FestivePlayer:
         for d in self.festives[today]:
             print(f'Festive: Found {d}')
             h, q = d['time'].split(':')
-            if hours != int(h) or quarters != int(q) // 15: return melody
+            if hours != int(h) or quarters != int(q) // 15: continue
 
             print(f'Festive: Playing {d}')
             song = Melody.from_file(d['melody'])
             song.transpose = d.get('transpose', 0)
             song.tempo = d.get('tempo', 1)
             return melody + song
+
+        # Keine Melodie passt
+        return melody
