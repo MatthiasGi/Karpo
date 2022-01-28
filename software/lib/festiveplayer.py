@@ -53,5 +53,5 @@ class FestivePlayer:
 
             song = Melody.from_file(d['melody'])
             song.transpose = d.get('transpose', 0)
-            song.tempo = d.get('tempo', 0)
+            song.tempo = d.get('tempo', 1)
             return melody + song
