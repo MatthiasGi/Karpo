@@ -53,6 +53,7 @@ class AngelusPlayer:
         self, melody: Melody, hours: int, quarters: int
     ) -> Melody:
         """Callback zum ggf. nötigen Abspielen des Angelus."""
+        if melody is None: return None
         if (hours, quarters) not in self.times: return melody
         angelus = Melody.from_file(self.settings.path)
         angelus.transpose = self.settings.transpose
